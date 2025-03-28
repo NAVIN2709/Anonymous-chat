@@ -4,9 +4,15 @@ import tailwindcss from '@tailwindcss/vite'
 
 
 // https://vite.dev/config/
+
 export default defineConfig({
-  plugins: [
-    tailwindcss(),
-    react(),
-  ],
-})
+  plugins: [react(), tailwindcss()],
+  base: '/',  // Ensure correct paths in production
+  server: {
+    port: 5173,  // Local development port
+  },
+  build: {
+    outDir: 'dist',  // Output folder for Render
+    sourcemap: true,  // Helps with debugging
+  }
+});
