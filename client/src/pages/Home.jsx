@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-const API_URL = "http://127.0.0.1:5000"; // Flask Backend URL
+const API_URL = "https://anonymous-chat-22p7.onrender.com"; // Flask Backend URL
 
 const App = () => {
   const [username, setUsername] = useState("");
