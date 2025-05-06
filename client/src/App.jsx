@@ -3,7 +3,7 @@ import Home from "./pages/Home.jsx"; // Make sure this file exists
 
 const App = () => {
   return (
-    <div className="App bg-[#000080] min-h-screen">
+    <div className="bg-[#000080] min-h-screen">
       <Home />
     </div>
   );
