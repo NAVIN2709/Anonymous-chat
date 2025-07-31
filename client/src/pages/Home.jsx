@@ -6,12 +6,13 @@ const Home = () => {
   const [username, setUsername] = useState("");
   const [message, setMessage] = useState("");
   const [posts, setPosts] = useState([]);
+  const [loading, setLoading] = useState(false); // Spinner state
 
   useEffect(() => {
     fetchPosts();
   }, []);
 
-  // Fetch posts from Flask API
+  // Fetch posts from Firestore
   const fetchPosts = async () => {
     try {
       const postsCollection = collection(db, "posts");
@@ -30,13 +31,19 @@ const Home = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!username || !message) return;
+
+    setLoading(true); // Start spinner
     try {
       await addDoc(collection(db, "posts"), {
         username: username,
         message: message,
       });
+      setMessage(""); // Clear input
+      fetchPosts(); // Refresh posts
     } catch (error) {
       console.error("Error posting message:", error);
+    } finally {
+      setLoading(false); // Stop spinner
     }
   };
 
@@ -62,9 +69,18 @@ const Home = () => {
           />
           <button
             type="submit"
-            className="w-full bg-blue-500 hover:bg-blue-600 py-2 rounded"
+            disabled={loading}
+            className={`w-full py-2 rounded flex items-center justify-center ${
+              loading
+                ? "bg-gray-500 cursor-not-allowed"
+                : "bg-blue-500 hover:bg-blue-600"
+            }`}
           >
-            Post
+            {loading ? (
+              <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+            ) : (
+              "Post"
+            )}
           </button>
         </form>
       </div>
